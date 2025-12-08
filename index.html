@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabo</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabo</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Vocabo</h1>
+    </header>
+
+    <main>
+        <section id="tela-inicio">
+            <h2>Como Jogar</h2>
+            <div class="instrucoes">
+                <p>Descubra a palavra certa em <strong>6 tentativas</strong>.</p>
+                <p>Depois de cada tentativa, as peças mostram o quão perto você está da solução.</p>
+                <div class="exemplo-instrucao">
+                    <span class="tile demo correct">T</span> Letra certa no lugar certo.
+                </div>
+                <div class="exemplo-instrucao">
+                    <span class="tile demo present">E</span> Letra certa no lugar errado.
+                </div>
+                <div class="exemplo-instrucao">
+                    <span class="tile demo absent">X</span> Letra não existe na palavra.
+                </div>
+            </div>
+            <button id="btn-comecar">Iniciar</button>
+        </section>
+
+        <div id="game-container" class="hidden">
+            <div id="grid-jogo">
+                <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+                <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+                <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+                <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+                <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+                <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+            </div>
+
+            <div class="controls">
+                <button id="btn-dica">DICA 💡</button>
+            </div>
+            
+            <p id="mensagem"></p>
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+</body>
+</html>
