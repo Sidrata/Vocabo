@@ -5,14 +5,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnComecar = document.getElementById("btn-comecar");
   const gridJogo = document.getElementById("grid-jogo");
   const btnDica = document.getElementById("btn-dica");
+  const btnVoltar = document.getElementById("btn-voltar");
 
   const tamanhoPalavra = 6;
   const tentativasMax = 6;
 
 const banco = "AMIGOS,CASACO,LIVROS,PRONTO,MOTIVO,CIDADE,JANELA,PEDRAS,FRUTAS,CUIDAR,RAPIDO,NOITES,SORTES,CORRER,BRASIL,CAMISA,PLANOS,SABORO,TALHER,FORMAS".split(",");
 
-  // Palavra secreta (pode trocar por escolha aleatória)
-  const palavraSecreta = "PESSOA".toUpperCase();
+function sortearPalavra() {
+  const indice = Math.floor(Math.random() * banco.length);
+  return banco[indice].toUpperCase();
+}
+
+
+  let palavraSecreta = sortearPalavra();
 
   let tentativaAtual = 0;
   let colunaAtual = 0;
@@ -161,8 +167,20 @@ const banco = "AMIGOS,CASACO,LIVROS,PRONTO,MOTIVO,CIDADE,JANELA,PEDRAS,FRUTAS,CU
       setTimeout(() => alert("Fim de jogo! A palavra era: " + palavraSecreta), 150);
     }
   }
+  btnVoltar.addEventListener("click", () => {
+    document.getElementById("tela-jogo").classList.add("escondida");
+    document.getElementById("tela-inicio").classList.remove("escondida");
+    tentativaAtual = 0;
+    colunaAtual = 0;
+    gameOver = false;
 
-  // Dica simples (mostra uma posição)
+    let palavraSecreta = sortearPalavra();
+
+    criarGrid();
+});
+
+
+  // Dica simples
   btnDica.addEventListener("click", () => {
     if (gameOver) return;
     const indice = Math.floor(Math.random() * tamanhoPalavra);
