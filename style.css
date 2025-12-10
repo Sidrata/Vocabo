@@ -1,22 +1,23 @@
-:root{
+/* --- VARIÁVEIS --- */
+:root {
     --bg-color: #0f172a;      /* Azul escuro do fundo */
     --tile-border: #334155;   /* Borda cinza azulada */
     --tile-bg: transparent;   /* Fundo do quadrado */
     --text-color: #ffffff;    /* Texto branco */
     --accent-color: #FFD900;  /* Amarelo da dica */
-    --certo: #16EE69;       /* Verde (certo) */
-    --presente: #eab308;       /* Amarelo (lugar errado) */
-    --inexistente: #404E45;        /* Cinza (não tem) */
+    --certo: #16EE69;         /* Verde (certo) */
+    --presente: #eab308;      /* Amarelo (lugar errado) */
+    --inexistente: #404E45;   /* Cinza (não tem) */
 }
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: arial;
+    font-family: Arial, sans-serif;
 }
 
-body{
+body {
     background-color: var(--bg-color);
     color: var(--text-color);
     display: flex;
@@ -24,17 +25,21 @@ body{
     align-items: center;
     min-height: 100vh;
 }
-.tela{
-    display: none;
-}
-.escondida{
-    display: none;
-}
-.tela:not(.escondida){
-    display: block;
+
+/* --- LÓGICA DE TELAS (CORREÇÃO AQUI) --- */
+/* O !important garante que o display: none vença o ID */
+.escondida {
+    display: none !important;
 }
 
-header{
+.tela {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
     margin-top: 20px;
     margin-bottom: 30px;
     font-size: 1.5rem;
@@ -43,16 +48,16 @@ header{
 /* Container que segura o grid e o botão */
 .game-container {
     display: flex;
-    flex-direction: row; /* Coloca botão ao lado do grid no Desktop */
+    flex-direction: row;
     align-items: flex-start;
     gap: 40px;
 }
 
 /* O GRID 6x6 */
-#grid-jogo{
+#grid-jogo {
     display: grid;
-    grid-template-columns: repeat(6, 1fr); /* 6 Colunas */
-    grid-template-rows: repeat(6, 1fr);    /* 6 Linhas */
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr); /* Adicionado para garantir altura */
     gap: 5px;
 }
 
@@ -67,10 +72,17 @@ header{
     font-size: 2rem;
     font-weight: bold;
     text-transform: uppercase;
+    color: white; /* Garante que a letra seja branca */
 }
 
+/* Classes que o JS adiciona para pintar */
+.correct { background-color: var(--certo) !important; border-color: var(--certo); }
+.present { background-color: var(--presente) !important; border-color: var(--presente); }
+.absent { background-color: var(--inexistente) !important; border-color: var(--inexistente); }
+
+
 /* Botão de Dica */
-#btn-dica{
+#btn-dica {
     background-color: transparent;
     color: var(--accent-color);
     border: 2px solid var(--accent-color);
@@ -89,30 +101,22 @@ header{
 /* Responsividade para Celular */
 @media (max-width: 600px) {
     .game-container {
-        flex-direction: column; /* Botão vai para baixo no celular */
+        flex-direction: column;
         align-items: center;
     }
 }
 
-/* ... MANTENHA AS VARIÁVEIS E O CSS DO BODY QUE VOCÊ JÁ TINHA ... */
-
-/* CLASSE UTILITÁRIA PARA ESCONDER ELEMENTOS */
-.hidden {
-    display: none !important;
-}
-
 /* ESTILO DA TELA INICIAL */
 #tela-inicio {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    /* display: flex;  <-- REMOVIDO DAQUI para não brigar com .escondida. 
+       A classe .tela já tem display: flex. */
     background-color: #1e293b;
     padding: 30px;
     border-radius: 15px;
     border: 2px solid var(--tile-border);
     max-width: 500px;
     text-align: center;
-    margin: 0 20px;
+    margin: 20px;
 }
 
 #tela-inicio h2 {
@@ -134,6 +138,7 @@ header{
     font-size: 0.9rem;
 }
 
+/* Mini tiles para demonstração */
 .tile.demo {
     width: 35px;
     height: 35px;
@@ -144,7 +149,8 @@ header{
 .tile.demo.present { background-color: var(--presente); }
 .tile.demo.absent { background-color: var(--inexistente); }
 
-#btn-comecar{
+/* BOTÕES GRANDES */
+#btn-comecar {
     margin-top: 20px;
     padding: 15px 35px;
     font-size: 2rem;
@@ -161,8 +167,9 @@ header{
     transform: scale(1.05);
     background-color: #16a34a;
 }
-#btn-voltar{
-    margin-top: 250px;
+
+#btn-voltar {
+    margin-top: 250px; /* Isso pode quebrar em telas pequenas, cuidado */
     padding: 15px 35px;
     font-size: 2rem;
     font-weight: bold;
@@ -173,7 +180,23 @@ header{
     cursor: pointer;
     transition: transform 0.5s;
 }
-#btn-voltar:hover{
+
+#btn-voltar:hover {
     transform: scale(1.05);
-    background-color: red;;
+    background-color: red;
+}
+
+/* nova parte */
+.tile.dica-revealed {
+    border-color: var(--accent-color) !important;
+    color: var(--accent-color) !important;
+    box-shadow: 0 0 10px var(--accent-color); /* Brilho */
+}
+
+/* Desabilita o botão se já usou a dica */
+#btn-dica:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: var(--inexistente);
+    color: var(--inexistente);
 }
