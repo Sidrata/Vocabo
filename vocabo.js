@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+
   // --- SELEÇÃO DE ELEMENTOS ---
   const telaInicio = document.getElementById("tela-inicio");
   const telaJogo = document.getElementById("tela-jogo");
@@ -6,15 +7,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const gridJogo = document.getElementById("grid-jogo");
   const btnDica = document.getElementById("btn-dica");
   const btnVoltar = document.getElementById("btn-voltar");
+  const telaFinal = document.getElementById("tela-final");
+  const finalTitulo = document.getElementById("final-titulo");
+  const finalPalavra = document.getElementById("final-palavra");
+  const finalTentativas = document.getElementById("final-tentativas");
+  const finalDica = document.getElementById("final-dica");
+  const btnReiniciar = document.getElementById("btn-reiniciar");
 
-  // --- CONFIGURAÇÕES DO JOGO ---
+
+  // --- CONFIGURAÇÕES ---
   const tamanhoPalavra = 6;
   const tentativasMax = 6;
-  let dicaUsada = false; // Controle da dica
+  let dicaUsada = false;
   let tentativaAtual = 0;
   let colunaAtual = 0;
   let gameOver = false;
-  let grid = []; // Matriz de dados
+  let grid = [];
 
   // --- BANCO DE PALAVRAS ---
   const banco = "ABERTO,ACORDO,ADULTO,AGENDA,AGULHA,AJUDAR,ALDEIA,ALEGRE,ALMOCO,ALUNOS,AMIGOS,AMPLO,ANIMAL,ANTIGO,APAGAR,APENAS,APERTO,AQUELE,ARANHA,ARVORE,ASSADO,ATENTO,ATLETA,ATRASO,AVANCO,BACANA,BANANA,BARATO,BARCOS,BATATA,BEBIDA,BEIJOS,BELEZA,BIGODE,BONECA,BONITO,BOSQUE,BRANCO,BRASIL,BRILHO,BRINCO,BURACO,CABELO,CABINE,CACHOS,CADEIA,CAIXAS,CALADO,CAMISA,CANECA,CANETA,CANTAR,CARTAS,CARTAZ,CASACO,CASADO,CAVALO,CEBOLA,CENTRO,CEREJA,CHEIRO,CICLO,CIDADE,CINEMA,CLASSE,COELHO,COLEGA,COLETE,COLHER,COLINA,COMIDA,COMPRA,CONTOS,CORRER,CORTAR,COZIDO,CUIDAR,CURVAS,CUSTOS,DENTRO,DEPOIS,DESEJO,DIARIO,DIRETO,DIVIDA,DOENTE,DORMIR,DOUTOR,DRAGAO,DUVIDA,EDICAO,EFEITO,ESCADA,ESCOLA,ESPACO,ESPADA,ESPELHO,ESTADO,ESTILO,ETERNO,EVENTO,FABULA,FALCAO,FAVELA,FECHAR,FERIDA,FERIAS,FESTAS,FEIJAO,FIGURA,FILHOS,FILMES,FLORES,FOLHAS,FONTES,FORCAS,FORMAS,FORNOS,FORTES,FRASCO,FRENTE,FRUTAS,FUNDOS,FUTURO,GAIOLA,GANHAR,GAROTO,GELADO,GIRAFA,GLORIA,GOSTAR,GRANDE,GRATIS,GRITOS,GUARDA,GUERRA,HABITO,HUMANO,IDIOMA,IGREJA,IMAGEM,INICIO,ISENTO,JANTAR,JARDIM,JOELHO,JORNAL,JOVENS,JULGAR,LADRAO,LANCHE,LEGADO,LENTOS,LETRAS,LIMITE,LINHAS,LIVROS,LOGICO,MACACO,MAGICO,MANTER,MARCAS,MARGEM,MARIDO,MEDIDA,MELHOR,MENINA,MENINO,MENTAL,MESTRE,METADE,METAIS,METODO,MINUTO,MISSAO,MODELO,MORDER,MOTIVO,MULHER,MUSICA,NASCER,NOITES,NOVELA,NUVENS,OCULOS,OFERTA,ORIGEM,OVELHA,PADRAO,PAINEL,PAIXAO,PAPEIS,PARADA,PAREDE,PARQUE,PARTES,PASSOS,PASTEL,PATRAO,PEDRAS,PENSAR,PESSOA,PILOTO,PINTOR,PLANOS,PLANTA,PONTES,PONTOS,PORCOS,PORTAS,PORTOS,POSSES,POSTOS,POUCOS,PRATOS,PRAIAS,PRAZOS,PRECOS,PRETOS,PRIMOS,PROVAS,PULSOS,PUNHOS,QUARTO,QUATRO,QUEIJO,QUENTE,QUERER,QUILOS,QUINTA,RADIOS,RAIVAS,RAPIDO,RAZOES,RECEIO,RECIFE,REGRAS,REINOS,RITMOS,ROCHAS,ROUPAS,RUIDOS,SABIOS,SAIDAS,SANGUE,SANTOS,SAPATO,SEMANA,SEMPRE,SENHAS,SENSOS,SEREIA,SERIOS,SERRAS,SERVIR,SINAIS,SITIOS,SKATES,SOMBRA,SONHOS,SORRIR,TABELA,TANQUE,TAPETE,TARDES,TAREFA,TEATRO,TECIDO,TEMPLO,TEMPOS,TENDAS,TENTAR,TERNOS,TERRAS,TESTES,TEXTOS,TIGRES,TIJOLO,TINTAS,TITULO,TOMATE,TORRES,TORTAS,TOSSES,TOTAIS,TRACOS,TRAJES,TRAMAS,TRATOS,TRENOS,TREVOS,TRIBOS,TRIGOS,TRISTE,TROCAS,TRONOS,TROPAS,TUMULO,TURMAS,TURNOS,UMBIGO,URBANO,USADOS,USINAS,VAZIOS,VELHOS,VENTOS,VERBAS,VERDES,VERMES,VERSOS,VIAGEM,VIBRAR,VIDEOS,VIDROS,VINHOS,VIOLAO,VISTOS,VOLTAR,VOLUME,XADREZ,XAROPE,ZEBRAS,ZINCOS".split(",");
@@ -26,7 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let palavraSecreta = sortearPalavra();
 
-  // --- FUNÇÕES VISUAIS ---
+
+  // ---------------------- GRID ----------------------
   function criarGrid() {
     gridJogo.innerHTML = "";
     grid = [];
@@ -42,43 +51,55 @@ document.addEventListener("DOMContentLoaded", () => {
       grid.push(linha);
     }
   }
-  
-  // Inicializa o grid na primeira vez
+
   criarGrid();
 
+
+  // ---------------------- VISUAL ----------------------
   function aplicarCor(tileEl, varName) {
     tileEl.style.backgroundColor = `var(${varName})`;
-    tileEl.style.color = "#fff"; // Texto branco para melhor contraste
-    tileEl.style.borderColor = `var(${varName})`; // Borda da mesma cor
+    tileEl.style.color = "#fff";
+    tileEl.style.borderColor = `var(${varName})`;
   }
 
-  // --- LOGICA PRINCIPAL ---
+
+  // ---------------------- COMEÇAR ----------------------
   btnComecar.addEventListener("click", () => {
     telaInicio.classList.add("escondida");
     telaJogo.classList.remove("escondida");
-  });
 
-  // Botão Voltar (CORRIGIDO)
-  btnVoltar.addEventListener("click", () => {
-    telaJogo.classList.add("escondida");
-    telaInicio.classList.remove("escondida");
-    
-    // Resetar variáveis
     tentativaAtual = 0;
     colunaAtual = 0;
     gameOver = false;
-    dicaUsada = false; // Reseta a dica
+    dicaUsada = false;
+
     btnDica.disabled = false;
-    btnDica.innerText = "DICA 💡";
+    btnDica.innerText = "Dica 💡";
 
-    // Resetar palavra (SEM 'let' ANTES)
     palavraSecreta = sortearPalavra();
-    console.log("Nova palavra:", palavraSecreta); // Para você testar
-
     criarGrid();
   });
 
-  // Teclado
+
+  // ---------------------- VOLTAR ----------------------
+  btnVoltar.addEventListener("click", () => {
+    telaJogo.classList.add("escondida");
+    telaInicio.classList.remove("escondida");
+
+    tentativaAtual = 0;
+    colunaAtual = 0;
+    gameOver = false;
+    dicaUsada = false;
+
+    btnDica.disabled = false;
+    btnDica.innerText = "Dica 💡";
+
+    palavraSecreta = sortearPalavra();
+    criarGrid();
+  });
+
+
+  // ---------------------- TECLADO ----------------------
   document.addEventListener("keydown", (event) => {
     if (gameOver) return;
 
@@ -93,60 +114,56 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+
+  // ---------------------- LETRAS ----------------------
   function inserirLetra(letra) {
     if (colunaAtual >= tamanhoPalavra) return;
+
     grid[tentativaAtual][colunaAtual] = letra;
+
     const tile = document.getElementById(`tile-${tentativaAtual}-${colunaAtual}`);
     if (tile) tile.textContent = letra;
+
     colunaAtual++;
   }
 
+
   function apagarLetra() {
     if (colunaAtual === 0) return;
+
     colunaAtual--;
     grid[tentativaAtual][colunaAtual] = "";
+
     const tile = document.getElementById(`tile-${tentativaAtual}-${colunaAtual}`);
     if (tile) tile.textContent = "";
-    
-    // Remove estilo de dica se o usuário apagar a letra da dica (opcional)
+
     if (tile) tile.classList.remove("dica-revealed");
   }
 
-  // --- SISTEMA DE DICA INTELIGENTE ---
+
+  // ---------------------- DICA ----------------------
   btnDica.addEventListener("click", () => {
     if (gameOver) return;
-    
-    // 1. Validações
-    if (dicaUsada) {
-      alert("Você já usou sua dica!");
-      return;
-    }
-    if (colunaAtual >= tamanhoPalavra) {
-      alert("Apague uma letra antes de pedir dica!");
-      return;
-    }
+    if (dicaUsada) return alert("Você já usou sua dica!");
+    if (colunaAtual >= tamanhoPalavra) return alert("Apague uma letra primeiro!");
 
-    // 2. Descobre a letra correta
     const letraCorreta = palavraSecreta[colunaAtual];
-
-    // 3. Atualiza Dados e Visual
     inserirLetra(letraCorreta);
 
-    // 4. Estilo especial para saber que foi dica
     const tile = document.getElementById(`tile-${tentativaAtual}-${colunaAtual - 1}`);
     if (tile) {
-        tile.classList.add("dica-revealed");
-        tile.style.borderColor = "var(--accent-color)";
-        tile.style.color = "var(--accent-color)";
+      tile.classList.add("dica-revealed");
+      tile.style.borderColor = "var(--accent-color)";
+      tile.style.color = "var(--accent-color)";
     }
 
-    // 5. Bloqueia botão
     dicaUsada = true;
     btnDica.disabled = true;
     btnDica.innerText = "Já usado";
   });
 
-  // --- VERIFICAÇÃO DE VITÓRIA/DERROTA ---
+
+  // ---------------------- CONFIRMAR ----------------------
   function confirmarTentativa() {
     if (colunaAtual < tamanhoPalavra) {
       alert("Digite todas as 6 letras!");
@@ -154,23 +171,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const tentativa = grid[tentativaAtual].join("");
-    
-    // Arrays para controle
     const secretaArr = palavraSecreta.split("");
     const tentativaArr = tentativa.split("");
     const marcado = new Array(tamanhoPalavra).fill(null);
 
-    // 1. Verdes (Correto)
+    // Verdes
     for (let i = 0; i < tamanhoPalavra; i++) {
       if (tentativaArr[i] === secretaArr[i]) {
         marcado[i] = "correct";
-        secretaArr[i] = null; // Remove para não contar de novo
+        secretaArr[i] = null;
       }
     }
 
-    // 2. Amarelos (Presente)
+    // Amarelos
     for (let i = 0; i < tamanhoPalavra; i++) {
-      if (marcado[i]) continue; // Se já é verde, pula
+      if (marcado[i]) continue;
 
       const letra = tentativaArr[i];
       const idx = secretaArr.indexOf(letra);
@@ -183,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // 3. Aplica cores
+    // Pintar
     for (let i = 0; i < tamanhoPalavra; i++) {
       const tile = document.getElementById(`tile-${tentativaAtual}-${i}`);
       if (marcado[i] === "correct") aplicarCor(tile, "--certo");
@@ -191,19 +206,50 @@ document.addEventListener("DOMContentLoaded", () => {
       else aplicarCor(tile, "--inexistente");
     }
 
-    // 4. Checa Fim de Jogo
+    // Vitória
     if (tentativa === palavraSecreta) {
       gameOver = true;
-      setTimeout(() => alert("Parabéns! Você acertou! 🎉"), 150);
+      abrirTelaFinal(true);
       return;
     }
 
     tentativaAtual++;
     colunaAtual = 0;
 
+    // Derrota
     if (tentativaAtual >= tentativasMax) {
       gameOver = true;
-      setTimeout(() => alert("Fim de jogo! A palavra era: " + palavraSecreta), 150);
+      tentativaAtual = 6;
+      setTimeout(() => abrirTelaFinal(false));
+
     }
   }
+
+  btnReiniciar.addEventListener("click", () => {
+    telaFinal.classList.add("escondida");
+    telaInicio.classList.remove("escondida");
+
+    tentativaAtual = 0;
+    colunaAtual = 0;
+    gameOver = false;
+    dicaUsada = false;
+
+    palavraSecreta = sortearPalavra();
+    criarGrid();
+});
+
+
+  function abrirTelaFinal(vitoria) {
+    telaJogo.classList.add("escondida");
+    telaFinal.classList.remove("escondida");
+
+    finalTitulo.textContent = vitoria ? "Você venceu! 🎉" : "Fim de jogo!";
+
+    finalPalavra.textContent = "Palavra correta: " + palavraSecreta;
+    finalTentativas.textContent = "Tentativas usadas: " + (tentativaAtual + 1);
+    finalDica.textContent = "Dica usada: " + (dicaUsada ? "Sim" : "Não");
+}
+
+
+
 });
