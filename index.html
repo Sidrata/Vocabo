@@ -1,65 +1,102 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vocabo</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
-<body>
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vocabo</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+
 <body>
 
-    <header>
-        <h1>Vocabo</h1>
-    </header>
+    <section id="tela-inicio" class="tela">
+        <h2>Vocabo</h2>
 
-    <main>
-        <section id="tela-inicio">
-            <h2>Como Jogar</h2>
-            <div class="instrucoes">
-                <p>Descubra a palavra certa em <strong>6 tentativas</strong>.</p>
-                <p>Depois de cada tentativa, as peças mostram o quão perto você está da solução.</p>
-                <div class="exemplo-instrucao">
-                    <span class="tile demo correct">T</span> Letra certa no lugar certo.
-                </div>
-                <div class="exemplo-instrucao">
-                    <span class="tile demo present">E</span> Letra certa no lugar errado.
-                </div>
-                <div class="exemplo-instrucao">
-                    <span class="tile demo absent">X</span> Letra não existe na palavra.
-                </div>
-            </div>
-            <button id="btn-comecar">Iniciar</button>
-        </section>
+        <div class="instrucoes">
+            <p>Descubra a palavra de 6 letras.</p>
+            <p>Cada tentativa preenche uma linha do grid.</p>
+            <p>As cores indicam o resultado:</p>
 
-        <div id="game-container" class="hidden">
-            <div id="grid-jogo">
-                <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
-                <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
-                <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
-                <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
-                <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
-                <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+            <div class="exemplo-instrucao">
+                <div class="tile demo correct">V</div>
+                <span>Letra correta no lugar certo.</span>
             </div>
 
-            <div class="controls">
-                <button id="btn-dica">DICA 💡</button>
+            <div class="exemplo-instrucao">
+                <div class="tile demo present">O</div>
+                <span>Letra existe, mas está no lugar errado.</span>
             </div>
-            
-            <p id="mensagem"></p>
+
+            <div class="exemplo-instrucao">
+                <div class="tile demo absent">C</div>
+                <span>Letra não está na palavra.</span>
+            </div>
         </div>
-    </main>
 
-    <script src="js/script.js"></script>
-</body>
-</html>
+        <button id="btn-comecar">Começar</button>
+    </section>
+
+    <section id="tela-jogo" class="tela escondida">
+
+        <header>Boa Sorte!</header>
+
+        <div class="game-container">
+            <div id="grid-jogo"></div>
+            <div id="teclado">
+    <div class="linha">
+        <button class="tecla">Q</button>
+        <button class="tecla">W</button>
+        <button class="tecla">E</button>
+        <button class="tecla">R</button>
+        <button class="tecla">T</button>
+        <button class="tecla">Y</button>
+        <button class="tecla">U</button>
+        <button class="tecla">I</button>
+        <button class="tecla">O</button>
+        <button class="tecla">P</button>
+    </div>
+
+    <div class="linha">
+        <button class="tecla">A</button>
+        <button class="tecla">S</button>
+        <button class="tecla">D</button>
+        <button class="tecla">F</button>
+        <button class="tecla">G</button>
+        <button class="tecla">H</button>
+        <button class="tecla">J</button>
+        <button class="tecla">K</button>
+        <button class="tecla">L</button>
+        <button class="tecla tecla-funcao" id="tecla-apagar">APAGAR</button>
+    </div>
+
+    <div class="linha">
+        <button class="tecla">Z</button>
+        <button class="tecla">X</button>
+        <button class="tecla">C</button>
+        <button class="tecla">V</button>
+        <button class="tecla">B</button>
+        <button class="tecla">N</button>
+        <button class="tecla">M</button>
+        <button class="tecla tecla-funcao" id="tecla-enter">ENTER</button>
+    </div>
+</div>
+            <button id="btn-dica">Dica</button>
+            <button id="btn-voltar">Voltar</button>
+        </div>
+
+    </section>
+
+    <section id="tela-final" class="tela escondida">
+        <h2 id="final-titulo"></h2>
+
+        <p id="final-palavra"></p>
+        <p id="final-tentativas"></p>
+        <p id="final-dica"></p>
+
+        <button id="btn-reiniciar">Jogar Novamente</button>
+    </section>
+
+
+    <script src="Js/vocabo.js"></script>
 </body>
 </html>
