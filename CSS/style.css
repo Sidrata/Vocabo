@@ -1,13 +1,13 @@
-/* --- VARIÁVEIS --- */
+
 :root {
-    --bg-color: #0f172a;      /* Azul escuro do fundo */
-    --tile-border: #334155;   /* Borda cinza azulada */
-    --tile-bg: transparent;   /* Fundo do quadrado */
-    --text-color: #ffffff;    /* Texto branco */
-    --accent-color: #FFD900;  /* Amarelo da dica */
-    --certo: #16EE69;         /* Verde (certo) */
-    --presente: #eab308;      /* Amarelo (lugar errado) */
-    --inexistente: #404E45;   /* Cinza (não tem) */
+    --bg-color: #0f172a;      
+    --tile-border: #334155;   
+    --tile-bg: transparent;  
+    --text-color: #ffffff;    
+    --accent-color: #FFD900; 
+    --certo: #16EE69;         
+    --presente: #eab308;     
+    --inexistente: #404E45;   
 }
 
 * {
@@ -26,8 +26,7 @@ body {
     min-height: 100vh;
 }
 
-/* --- LÓGICA DE TELAS (CORREÇÃO AQUI) --- */
-/* O !important garante que o display: none vença o ID */
+
 .escondida {
     display: none !important;
 }
@@ -45,7 +44,7 @@ header {
     font-size: 1.5rem;
 }
 
-/* Container que segura o grid e o botão */
+/*  o grid e o botão */
 .game-container {
     display: flex;
     flex-direction: row;
@@ -53,15 +52,15 @@ header {
     gap: 40px;
 }
 
-/* O GRID 6x6 */
+/* 6x6 */
 #grid-jogo {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(6, 1fr); /* Adicionado para garantir altura */
+    grid-template-rows: repeat(6, 1fr); 
     gap: 5px;
 }
 
-/* Estilo de cada quadradinho */
+/* Estilo quadrado */
 .tile {
     width: 50px;
     height: 50px;
@@ -72,10 +71,10 @@ header {
     font-size: 2rem;
     font-weight: bold;
     text-transform: uppercase;
-    color: white; /* Garante que a letra seja branca */
+    color: white; 
 }
 
-/* Classes que o JS adiciona para pintar */
+
 .correct { background-color: var(--certo) !important; border-color: var(--certo); }
 .present { background-color: var(--presente) !important; border-color: var(--presente); }
 .absent { background-color: var(--inexistente) !important; border-color: var(--inexistente); }
@@ -98,7 +97,7 @@ header {
     color: var(--bg-color);
 }
 
-/* Responsividade para Celular */
+
 @media (max-width: 600px) {
     .game-container {
         flex-direction: column;
@@ -106,10 +105,9 @@ header {
     }
 }
 
-/* ESTILO DA TELA INICIAL */
+
 #tela-inicio {
-    /* display: flex;  <-- REMOVIDO DAQUI para não brigar com .escondida. 
-       A classe .tela já tem display: flex. */
+
     background-color: #1e293b;
     padding: 30px;
     border-radius: 15px;
@@ -138,7 +136,7 @@ header {
     font-size: 0.9rem;
 }
 
-/* Mini tiles para demonstração */
+
 .tile.demo {
     width: 35px;
     height: 35px;
@@ -149,7 +147,7 @@ header {
 .tile.demo.present { background-color: var(--presente); }
 .tile.demo.absent { background-color: var(--inexistente); }
 
-/* BOTÕES GRANDES */
+
 #btn-comecar {
     margin-top: 20px;
     padding: 15px 35px;
@@ -169,7 +167,7 @@ header {
 }
 
 #btn-voltar {
-    margin-top: 250px; /* Isso pode quebrar em telas pequenas, cuidado */
+    margin-top: 250px;
     padding: 15px 35px;
     font-size: 2rem;
     font-weight: bold;
@@ -186,14 +184,13 @@ header {
     background-color: red;
 }
 
-/* nova parte */
+
 .tile.dica-revealed {
     border-color: var(--accent-color) !important;
     color: var(--accent-color) !important;
-    box-shadow: 0 0 10px var(--accent-color); /* Brilho */
+    box-shadow: 0 0 10px var(--accent-color); 
 }
 
-/* Desabilita o botão se já usou a dica */
 #btn-dica:disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -227,4 +224,55 @@ header {
 #btn-reiniciar:hover {
     transform: scale(1.05);
     background-color: #14b8a6;
+}
+
+#teclado {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#teclado .linha {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+.tecla {
+    background-color: #3d4a42;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 16px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.tecla:hover {
+    opacity: 0.8;
+}
+
+.tecla-funcao {
+    background-color: #ffffff;
+    color: black;
+    font-size: 1rem;
+    padding: 12px 18px;
+}
+
+.tecla.correct {
+    background-color: var(--certo) !important;
+    color: white;
+}
+
+.tecla.present {
+    background-color: var(--presente) !important;
+    color: white;
+}
+
+.tecla.absent {
+    background-color: var(--inexistente) !important;
+    color: white;
 }
