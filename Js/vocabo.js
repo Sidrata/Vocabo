@@ -14,12 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const finalDica = document.getElementById("final-dica");
   const btnReiniciar = document.getElementById("btn-reiniciar");
 
-
   // --- CONFIGURAÇÕES ---
   const tamanhoPalavra = 6;
   const tentativasMax = 6;
   let dicaUsada = false;
   let tentativaAtual = 0;
+  // Carrega vitórias salvas ou começa com 0
+  let totalVitorias = parseInt(localStorage.getItem('vocabo_vitorias')) || 0;
   let colunaAtual = 0;
   let gameOver = false;
   let grid = [];
@@ -33,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   let palavraSecreta = sortearPalavra();
-
 
   // ---------------------- GRID ----------------------
   function criarGrid() {
@@ -54,14 +54,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   criarGrid();
 
-
   // ---------------------- VISUAL ----------------------
   function aplicarCor(tileEl, varName) {
     tileEl.style.backgroundColor = `var(${varName})`;
     tileEl.style.color = "#fff";
     tileEl.style.borderColor = `var(${varName})`;
   }
-
 
   // ---------------------- COMEÇAR ----------------------
   btnComecar.addEventListener("click", () => {
@@ -80,31 +78,24 @@ document.addEventListener("DOMContentLoaded", () => {
     criarGrid();
   });
 
-
   // ---------------------- VOLTAR ----------------------
   btnVoltar.addEventListener("click", () => {
     telaJogo.classList.add("escondida");
     telaInicio.classList.remove("escondida");
-
     tentativaAtual = 0;
     colunaAtual = 0;
     gameOver = false;
     dicaUsada = false;
-
     btnDica.disabled = false;
     btnDica.innerText = "Dica 💡";
-
     palavraSecreta = sortearPalavra();
     criarGrid();
   });
 
-
   // ---------------------- TECLADO ----------------------
   document.addEventListener("keydown", (event) => {
     if (gameOver) return;
-
     const key = event.key.toUpperCase();
-
     if (/^[A-Z]$/.test(key)) {
       inserirLetra(key);
     } else if (event.key === "Backspace") {
@@ -114,32 +105,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-
   // ---------------------- LETRAS ----------------------
   function inserirLetra(letra) {
     if (colunaAtual >= tamanhoPalavra) return;
-
     grid[tentativaAtual][colunaAtual] = letra;
-
     const tile = document.getElementById(`tile-${tentativaAtual}-${colunaAtual}`);
     if (tile) tile.textContent = letra;
-
     colunaAtual++;
   }
 
-
   function apagarLetra() {
     if (colunaAtual === 0) return;
-
     colunaAtual--;
     grid[tentativaAtual][colunaAtual] = "";
-
     const tile = document.getElementById(`tile-${tentativaAtual}-${colunaAtual}`);
     if (tile) tile.textContent = "";
-
     if (tile) tile.classList.remove("dica-revealed");
   }
-
 
   // ---------------------- DICA ----------------------
   btnDica.addEventListener("click", () => {
@@ -161,7 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
     btnDica.disabled = true;
     btnDica.innerText = "Já usado";
   });
-
 
   // ---------------------- CONFIRMAR ----------------------
   function confirmarTentativa() {
@@ -186,10 +167,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Amarelos
     for (let i = 0; i < tamanhoPalavra; i++) {
       if (marcado[i]) continue;
-
       const letra = tentativaArr[i];
       const idx = secretaArr.indexOf(letra);
-
       if (idx !== -1) {
         marcado[i] = "present";
         secretaArr[idx] = null;
@@ -219,37 +198,39 @@ document.addEventListener("DOMContentLoaded", () => {
     // Derrota
     if (tentativaAtual >= tentativasMax) {
       gameOver = true;
-      tentativaAtual = 6;
       setTimeout(() => abrirTelaFinal(false));
-
     }
   }
 
   btnReiniciar.addEventListener("click", () => {
     telaFinal.classList.add("escondida");
     telaInicio.classList.remove("escondida");
-
     tentativaAtual = 0;
     colunaAtual = 0;
     gameOver = false;
     dicaUsada = false;
-
     palavraSecreta = sortearPalavra();
     criarGrid();
-});
-
+  });
 
   function abrirTelaFinal(vitoria) {
     telaJogo.classList.add("escondida");
     telaFinal.classList.remove("escondida");
 
-    finalTitulo.textContent = vitoria ? "Você venceu! 🎉" : "Fim de jogo!";
+    if (vitoria) {
+        finalTitulo.textContent = "Você venceu! ";
+        
+        // --- AQUI ESTÁ A MÁGICA DO SAVE ---
+        totalVitorias++; 
+        localStorage.setItem('vocabo_vitorias', totalVitorias);
+        
+    } else {
+        finalTitulo.textContent = "Você perdeu!";
+    }
 
     finalPalavra.textContent = "Palavra correta: " + palavraSecreta;
     finalTentativas.textContent = "Tentativas usadas: " + (tentativaAtual + 1);
-    finalDica.textContent = "Dica usada: " + (dicaUsada ? "Sim" : "Não");
-}
-
-
+    finalDica.innerText = `Dica usada: ${dicaUsada ? "Sim" : "Não"} \n  Vitórias Totais: ${totalVitorias}`;
+  }
 
 });
