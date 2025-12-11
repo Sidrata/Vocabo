@@ -1,13 +1,13 @@
-/* --- VARIÁVEIS --- */
+
 :root {
-    --bg-color: #0f172a;      /* Azul escuro do fundo */
-    --tile-border: #334155;   /* Borda cinza azulada */
-    --tile-bg: transparent;   /* Fundo do quadrado */
-    --text-color: #ffffff;    /* Texto branco */
-    --accent-color: #FFD900;  /* Amarelo da dica */
-    --certo: #16EE69;         /* Verde (certo) */
-    --presente: #eab308;      /* Amarelo (lugar errado) */
-    --inexistente: #404E45;   /* Cinza (não tem) */
+    --bg-color: #0f172a;      
+    --tile-border: #334155;   
+    --tile-bg: transparent;  
+    --text-color: #ffffff;    
+    --accent-color: #FFD900; 
+    --certo: #16EE69;         
+    --presente: #eab308;     
+    --inexistente: #404E45;   
 }
 
 * {
@@ -26,8 +26,7 @@ body {
     min-height: 100vh;
 }
 
-/* --- LÓGICA DE TELAS (CORREÇÃO AQUI) --- */
-/* O !important garante que o display: none vença o ID */
+
 .escondida {
     display: none !important;
 }
@@ -45,7 +44,7 @@ header {
     font-size: 1.5rem;
 }
 
-/* Container que segura o grid e o botão */
+/*  o grid e o botão */
 .game-container {
     display: flex;
     flex-direction: row;
@@ -53,15 +52,15 @@ header {
     gap: 40px;
 }
 
-/* O GRID 6x6 */
+/* 6x6 */
 #grid-jogo {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(6, 1fr); /* Adicionado para garantir altura */
+    grid-template-rows: repeat(6, 1fr); 
     gap: 5px;
 }
 
-/* Estilo de cada quadradinho */
+/* Estilo quadrado */
 .tile {
     width: 50px;
     height: 50px;
@@ -72,10 +71,10 @@ header {
     font-size: 2rem;
     font-weight: bold;
     text-transform: uppercase;
-    color: white; /* Garante que a letra seja branca */
+    color: white; 
 }
 
-/* Classes que o JS adiciona para pintar */
+
 .correct { background-color: var(--certo) !important; border-color: var(--certo); }
 .present { background-color: var(--presente) !important; border-color: var(--presente); }
 .absent { background-color: var(--inexistente) !important; border-color: var(--inexistente); }

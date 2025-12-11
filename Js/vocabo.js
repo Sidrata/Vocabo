@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const finalDica = document.getElementById("final-dica");
     const btnReiniciar = document.getElementById("btn-reiniciar");
   
-    // --- CONFIGURAÇÕES ---
+  
     const tamanhoPalavra = 6;
     const tentativasMax = 6;
     let dicaUsada = false;
@@ -23,10 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let gameOver = false;
     let grid = [];
   
-    // --- BANCO DE PALAVRAS ---
+   
     const banco = "ABERTO,ACORDO,ADULTO,AGENDA,AGULHA,AJUDAR,ALDEIA,ALEGRE,ALMOCO,ALUNOS,AMIGOS,AMPLO,ANIMAL,ANTIGO,APAGAR,APENAS,APERTO,AQUELE,ARANHA,ARVORE,ASSADO,ATENTO,ATLETA,ATRASO,AVANCO,BACANA,BANANA,BARATO,BARCOS,BATATA,BEBIDA,BEIJOS,BELEZA,BIGODE,BONECA,BONITO,BOSQUE,BRANCO,BRASIL,BRILHO,BRINCO,BURACO,CABELO,CABINE,CACHOS,CADEIA,CAIXAS,CALADO,CAMISA,CANECA,CANETA,CANTAR,CARTAS,CARTAZ,CASACO,CASADO,CAVALO,CEBOLA,CENTRO,CEREJA,CHEIRO,CICLO,CIDADE,CINEMA,CLASSE,COELHO,COLEGA,COLETE,COLHER,COLINA,COMIDA,COMPRA,CONTOS,CORRER,CORTAR,COZIDO,CUIDAR,CURVAS,CUSTOS,DENTRO,DEPOIS,DESEJO,DIARIO,DIRETO,DIVIDA,DOENTE,DORMIR,DOUTOR,DRAGAO,DUVIDA,EDICAO,EFEITO,ESCADA,ESCOLA,ESPACO,ESPADA,ESPELHO,ESTADO,ESTILO,ETERNO,EVENTO,FABULA,FALCAO,FAVELA,FECHAR,FERIDA,FERIAS,FESTAS,FEIJAO,FIGURA,FILHOS,FILMES,FLORES,FOLHAS,FONTES,FORCAS,FORMAS,FORNOS,FORTES,FRASCO,FRENTE,FRUTAS,FUNDOS,FUTURO,GAIOLA,GANHAR,GAROTO,GELADO,GIRAFA,GLORIA,GOSTAR,GRANDE,GRATIS,GRITOS,GUARDA,GUERRA,HABITO,HUMANO,IDIOMA,IGREJA,IMAGEM,INICIO,ISENTO,JANTAR,JARDIM,JOELHO,JORNAL,JOVENS,JULGAR,LADRAO,LANCHE,LEGADO,LENTOS,LETRAS,LIMITE,LINHAS,LIVROS,LOGICO,MACACO,MAGICO,MANTER,MARCAS,MARGEM,MARIDO,MEDIDA,MELHOR,MENINA,MENINO,MENTAL,MESTRE,METADE,METAIS,METODO,MINUTO,MISSAO,MODELO,MORDER,MOTIVO,MULHER,MUSICA,NASCER,NOITES,NOVELA,NUVENS,OCULOS,OFERTA,ORIGEM,OVELHA,PADRAO,PAINEL,PAIXAO,PAPEIS,PARADA,PAREDE,PARQUE,PARTES,PASSOS,PASTEL,PATRAO,PEDRAS,PENSAR,PESSOA,PILOTO,PINTOR,PLANOS,PLANTA,PONTES,PONTOS,PORCOS,PORTAS,PORTOS,POSSES,POSTOS,POUCOS,PRATOS,PRAIAS,PRAZOS,PRECOS,PRETOS,PRIMOS,PROVAS,PULSOS,PUNHOS,QUARTO,QUATRO,QUEIJO,QUENTE,QUERER,QUILOS,QUINTA,RADIOS,RAIVAS,RAPIDO,RAZOES,RECEIO,RECIFE,REGRAS,REINOS,RITMOS,ROCHAS,ROUPAS,RUIDOS,SABIOS,SAIDAS,SANGUE,SANTOS,SAPATO,SEMANA,SEMPRE,SENHAS,SENSOS,SEREIA,SERIOS,SERRAS,SERVIR,SINAIS,SITIOS,SKATES,SOMBRA,SONHOS,SORRIR,TABELA,TANQUE,TAPETE,TARDES,TAREFA,TEATRO,TECIDO,TEMPLO,TEMPOS,TENDAS,TENTAR,TERNOS,TERRAS,TESTES,TEXTOS,TIGRES,TIJOLO,TINTAS,TITULO,TOMATE,TORRES,TORTAS,TOSSES,TOTAIS,TRACOS,TRAJES,TRAMAS,TRATOS,TRENOS,TREVOS,TRIBOS,TRIGOS,TRISTE,TROCAS,TRONOS,TROPAS,TUMULO,TURMAS,TURNOS,UMBIGO,URBANO,USADOS,USINAS,VAZIOS,VELHOS,VENTOS,VERBAS,VERDES,VERMES,VERSOS,VIAGEM,VIBRAR,VIDEOS,VIDROS,VINHOS,VIOLAO,VISTOS,VOLTAR,VOLUME,XADREZ,XAROPE,ZEBRAS,ZINCOS".split(",");
   
-    // Configura os cliques no teclado virtual
     document.querySelectorAll(".tecla").forEach(btn => {
       btn.addEventListener("click", () => {
         const valor = btn.textContent;
@@ -47,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     let palavraSecreta = sortearPalavra();
   
-    // ---------------------- GRID ----------------------
+    // colunas
     function criarGrid() {
       gridJogo.innerHTML = "";
       grid = [];
@@ -62,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         grid.push(linha);
       }
-      // Limpa as cores do teclado visual ao criar novo grid
+
       document.querySelectorAll(".tecla").forEach(t => {
           t.classList.remove("correct", "present", "absent");
           t.removeAttribute("data-status");
@@ -78,8 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const prioridade = { absent: 1, present: 2, correct: 3 };
       const atual = tecla.dataset.status || "";
       
-      // Só muda a cor se a nova cor for "mais importante" que a atual
-      // Ex: Se já está verde (3), não vira amarelo (2)
+
       if (atual && prioridade[status] <= prioridade[atual]) return;
   
       tecla.classList.remove("absent", "present", "correct");
@@ -179,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btnDica.innerText = "Já usado";
     });
   
-    // ---------------------- CONFIRMAR (CORRIGIDO) ----------------------
+  // tentativa confirma
   function confirmarTentativa() {
     if (colunaAtual < tamanhoPalavra) {
       alert("Digite todas as 6 letras!");
@@ -191,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const tentativaArr = tentativa.split("");
     const marcado = new Array(tamanhoPalavra).fill(null);
 
-    // 1. Lógica dos Verdes (Correct)
+    //  Lógica dos Verdes 
     for (let i = 0; i < tamanhoPalavra; i++) {
       if (tentativaArr[i] === secretaArr[i]) {
         marcado[i] = "correct";
@@ -199,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // 2. Lógica dos Amarelos (Present)
+    // Lógica dos Amarelos 
     for (let i = 0; i < tamanhoPalavra; i++) {
       if (marcado[i]) continue;
       const letra = tentativaArr[i];
@@ -212,18 +210,18 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // 3. PINTAR GRID E TECLADO (Tudo no mesmo loop)
+    // pinta teclado
     for (let i = 0; i < tamanhoPalavra; i++) {
       const tile = document.getElementById(`tile-${tentativaAtual}-${i}`);
       const letra = tentativaArr[i];
       const status = marcado[i];
 
-      // Pinta o quadrado do grid
+    
       if (status === "correct") aplicarCor(tile, "--certo");
       else if (status === "present") aplicarCor(tile, "--presente");
       else aplicarCor(tile, "--inexistente");
 
-      // PINTA A TECLA (Aqui estava o erro antes)
+     
       pintarTecla(letra, status);
     }
 
